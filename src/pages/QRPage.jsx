@@ -1,15 +1,14 @@
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { QRCodeSVG } from 'qrcode.react';
-import { Download, Copy, Check, Scissors, Smartphone, Star, Camera, ChevronRight } from 'lucide-react';
+import { Download, Copy, Check, Scissors, Smartphone, Star, ChevronRight, QrCode } from 'lucide-react';
 import { APP_URL, SALON_NAME, SALON_TAGLINE, ROUTES } from '../utils/constants';
 
 /**
- * QRPage (Main Starting Screen)
+ * QRPage (Main Starting Screen at /)
  *
- * Shows the salon's scannable Barcode / QR Code first.
- * Customers scan it with their phone camera to open the review & rating page.
- * Also provides an instant "Rate on this Device" button.
+ * Displays ONLY the salon's official QR / Barcode for customers to scan.
+ * No camera scanner.
  */
 export default function QRPage() {
   const navigate = useNavigate();
@@ -20,7 +19,7 @@ export default function QRPage() {
   // QR encodes the /review path so scanning lands directly on the star review page
   const reviewUrl = `${APP_URL.replace(/\/$/, '')}${ROUTES.REVIEW}`;
 
-  // ── Copy link ───────────────────────────────────────────────────────────────
+  // ── Copy review link ─────────────────────────────────────────────────────────
   async function handleCopy() {
     try {
       await navigator.clipboard.writeText(reviewUrl);
@@ -38,7 +37,7 @@ export default function QRPage() {
     }
   }
 
-  // ── Download high-res PNG for printing ──────────────────────────────────────
+  // ── Download high-res PNG for salon counter print ────────────────────────────
   function handleDownload() {
     const SIZE = 1024;
     const PADDING = 64;
@@ -47,7 +46,6 @@ export default function QRPage() {
     canvas.height = SIZE;
     const ctx = canvas.getContext('2d');
 
-    // Clean white background
     ctx.fillStyle = '#ffffff';
     ctx.fillRect(0, 0, SIZE, SIZE);
 
@@ -81,22 +79,13 @@ export default function QRPage() {
       <div className="w-full max-w-sm mx-auto flex flex-col gap-6">
 
         {/* ── Top Bar ─────────────────────────────────────────────── */}
-        <div className="flex items-center justify-between w-full px-1">
-          <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-salon-500 animate-pulse" />
+        <div className="flex items-center justify-center w-full">
+          <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full border border-pink-100 shadow-sm">
+            <QrCode size={14} className="text-salon-500" />
             <span className="text-xs font-bold text-gray-700 tracking-wider uppercase">
-              Official QR Standee
+              Official Review Barcode
             </span>
           </div>
-
-          <button
-            type="button"
-            onClick={() => navigate(ROUTES.SCAN)}
-            className="flex items-center gap-1.5 text-xs font-semibold text-gray-500 hover:text-salon-600 bg-white/80 px-3 py-1.5 rounded-full border border-pink-100 shadow-sm transition-all"
-          >
-            <Camera size={13} className="text-salon-500" />
-            Camera Scanner
-          </button>
         </div>
 
         {/* ── Header ─────────────────────────────────────────────── */}
@@ -115,7 +104,7 @@ export default function QRPage() {
           </div>
         </header>
 
-        {/* ── QR Card ────────────────────────────────────────────── */}
+        {/* ── Barcode Card ────────────────────────────────────────── */}
         <div className="card flex flex-col items-center gap-6">
 
           {/* Badge */}
@@ -123,7 +112,7 @@ export default function QRPage() {
                           px-4 py-2 rounded-full">
             <Smartphone size={15} className="text-salon-500" />
             <span className="text-xs font-semibold text-salon-600">
-              Scan QR to Rate Your Experience
+              Scan with your phone camera
             </span>
           </div>
 
@@ -143,14 +132,14 @@ export default function QRPage() {
             />
           </div>
 
-          {/* Rate Directly Button */}
+          {/* Direct Rating Button */}
           <button
             type="button"
             onClick={() => navigate(ROUTES.REVIEW)}
             className="btn-primary w-full flex items-center justify-center gap-2 shadow-lg shadow-pink-200"
           >
             <Star size={18} fill="currentColor" />
-            <span>Rate Directly on this Device</span>
+            <span>Rate on this Device</span>
             <ChevronRight size={18} />
           </button>
 
@@ -158,20 +147,20 @@ export default function QRPage() {
           <div className="w-full bg-gradient-to-r from-salon-50 to-pink-50
                           rounded-xl p-4 border border-salon-100 text-left">
             <p className="text-xs font-semibold text-salon-700 mb-2">
-              ✨ Customer Review Routing
+              ✨ Review Routing
             </p>
             <ul className="space-y-1.5 text-xs text-gray-600">
               <li className="flex items-start gap-2">
                 <span className="text-salon-400 font-bold mt-0.5">1.</span>
-                <span>Customer scans this QR code with their phone camera</span>
+                <span>Customer scans this barcode with their phone</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-amber-500 font-bold mt-0.5">↓</span>
-                <span><strong>Below 3 Stars:</strong> Private feedback form (captured internally)</span>
+                <span><strong>Below 3 Stars:</strong> Private salon feedback (internal)</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-600 font-bold mt-0.5">↑</span>
-                <span><strong>3 Stars & Above:</strong> Redirects straight to Google Reviews ⭐</span>
+                <span><strong>3 Stars & Above:</strong> Redirects to Google Reviews ⭐</span>
               </li>
             </ul>
           </div>
@@ -207,7 +196,7 @@ export default function QRPage() {
 
         {/* Footer */}
         <p className="text-center text-xs text-gray-400">
-          {SALON_NAME} Review Assistant ✨
+          {SALON_NAME} Review Barcode ✨
         </p>
 
       </div>

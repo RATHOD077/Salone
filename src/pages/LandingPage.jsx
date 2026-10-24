@@ -19,21 +19,14 @@ export default function LandingPage() {
     <div className="page-enter min-h-screen flex items-center justify-center px-4 py-8">
       <div className="w-full max-w-sm mx-auto flex flex-col gap-6">
 
-        {/* Quick Toolbar (Senior Dev touch: accessible scanner & standee switcher) */}
-        <div className="flex items-center justify-between w-full px-1">
+        {/* Barcode Standee Link */}
+        <div className="flex items-center justify-end w-full px-1">
           <Link
-            to={ROUTES.SCAN}
-            className="flex items-center gap-1.5 text-xs font-semibold text-gray-500 hover:text-salon-600 bg-white/80 backdrop-blur-sm px-3 py-1.5 rounded-full border border-pink-100 shadow-sm transition-all"
-          >
-            <Camera size={14} className="text-salon-500" />
-            Scan QR
-          </Link>
-          <Link
-            to={ROUTES.QR}
-            className="flex items-center gap-1.5 text-xs font-semibold text-gray-500 hover:text-salon-600 bg-white/80 backdrop-blur-sm px-3 py-1.5 rounded-full border border-pink-100 shadow-sm transition-all"
+            to={ROUTES.START}
+            className="flex items-center gap-1.5 text-xs font-semibold text-gray-500 hover:text-salon-600 bg-white/80 backdrop-blur-sm px-3.5 py-1.5 rounded-full border border-pink-100 shadow-sm transition-all"
           >
             <QrCode size={14} className="text-salon-500" />
-            QR Standee
+            View Barcode Standee
           </Link>
         </div>
 
