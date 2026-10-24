@@ -1,6 +1,10 @@
 // ─── App-wide constants (Pure Frontend - Direct Configuration) ───────────────
 // No .env file required. All configuration is set directly here.
 
+/** Backend API URL (Default to deployed Render backend) */
+export const API_BASE_URL =
+  (import.meta.env.VITE_API_URL || 'https://salone-1-91bd.onrender.com').replace(/\/$/, '');
+
 /** Google Maps review URL for Hair Craft Family Salon */
 export const GOOGLE_REVIEW_URL = 'https://maps.app.goo.gl/feNbzPtZsLr6Skra6';
 

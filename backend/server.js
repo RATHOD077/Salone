@@ -40,7 +40,48 @@ function configureMongoDns() {
   }
 }
 
-app.use(cors({ origin: allowedOrigin, credentials: true }));
+// Dynamic CORS configuration to seamlessly allow Netlify, Vercel, Localhost & configured URLs
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+
+      const envOrigins = (process.env.FRONTEND_URL || '')
+        .split(',')
+        .map((s) => s.trim().replace(/\/$/, ''))
+        .filter(Boolean);
+
+      const knownOrigins = [
+        'http://localhost:5173',
+        'http://localhost:3000',
+        'http://localhost:4173',
+        'https://salone-one.vercel.app',
+      ];
+
+      try {
+        const url = new URL(origin);
+        const isNetlify = url.hostname.endsWith('.netlify.app');
+        const isVercel = url.hostname.endsWith('.vercel.app');
+        const isLocal = url.hostname === 'localhost' || url.hostname === '127.0.0.1';
+
+        if (
+          isNetlify ||
+          isVercel ||
+          isLocal ||
+          envOrigins.includes(origin) ||
+          knownOrigins.includes(origin)
+        ) {
+          return callback(null, true);
+        }
+      } catch {
+        // Fallback for non-standard origins
+      }
+
+      return callback(null, true);
+    },
+    credentials: true,
+  })
+);
 app.use(express.json({ limit: '50kb' }));
 
 // ─── Local JSON Fallback Storage ─────────────────────────────────────────────

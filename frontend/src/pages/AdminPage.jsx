@@ -21,7 +21,7 @@ import {
   ChevronRight,
   Check,
 } from 'lucide-react';
-import { SALON_NAME, SALON_TAGLINE } from '../utils/constants';
+import { SALON_NAME, SALON_TAGLINE, API_BASE_URL } from '../utils/constants';
 
 const AUTH_STORAGE_KEY = 'salon_admin_token';
 const AUTH_EMAIL_KEY = 'salon_admin_email';
@@ -45,7 +45,7 @@ export default function AdminPage() {
   const [statusFilter, setStatusFilter] = useState('all'); // 'all' | 'new' | 'contacted' | 'resolved'
   const [ratingFilter, setRatingFilter] = useState('all'); // 'all' | '1' | '2' | '3' | '4' | '5'
 
-  const apiBase = import.meta.env.VITE_API_URL || '';
+  const apiBase = API_BASE_URL;
 
   const showToast = useCallback((msg) => {
     setToastMessage(msg);

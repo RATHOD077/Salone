@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Send, User, Phone, MessageSquare, AlertCircle, Star } from 'lucide-react';
 import { useReview } from '../context/ReviewContext';
-import { ROUTES } from '../utils/constants';
+import { ROUTES, API_BASE_URL } from '../utils/constants';
 
 /**
  * FeedbackForm
@@ -50,7 +50,7 @@ export default function FeedbackForm() {
     };
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/feedback`, {
+      const response = await fetch(`${API_BASE_URL}/api/feedback`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(privateFeedback),
