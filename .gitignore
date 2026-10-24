@@ -25,6 +25,9 @@ backend/.env
 backend/.env.*
 !backend/.env.example
 
+# Backend local storage
+backend/data/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
