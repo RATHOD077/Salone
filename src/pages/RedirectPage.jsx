@@ -1,72 +1,57 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Sparkles, ArrowLeft } from 'lucide-react';
-import PositiveReviewComposer from '../components/PositiveReviewComposer';
+import { Sparkles, ExternalLink } from 'lucide-react';
+import { GOOGLE_REVIEW_URL, SALON_NAME, RATING_LABELS } from '../utils/constants';
 import { useReview } from '../context/ReviewContext';
-import { ROUTES, SALON_NAME, RATING_LABELS } from '../utils/constants';
 
 /**
  * RedirectPage
  *
- * Shown when the customer selects 3, 4, or 5 stars.
- * Captures the customer's review on the website and opens Google Review
- * so their review goes onto Google directly.
+ * Shown when 3 stars or above are selected.
+ * Immediately redirects the customer to the salon's Google Maps review page.
  */
 export default function RedirectPage() {
-  const navigate = useNavigate();
   const { rating } = useReview();
 
-  // Guard: if accessed directly without rating, send back to review
   useEffect(() => {
-    if (rating === null) {
-      navigate(ROUTES.REVIEW, { replace: true });
-    }
-  }, [rating, navigate]);
+    // Directly redirect to Google Review
+    const timer = setTimeout(() => {
+      window.location.href = GOOGLE_REVIEW_URL;
+    }, 600);
 
-  if (rating === null) return null;
+    return () => clearTimeout(timer);
+  }, []);
 
   const label = RATING_LABELS[rating] || 'Great';
 
   return (
     <div className="page-enter min-h-screen flex items-center justify-center px-4 py-8">
-      <div className="w-full max-w-md mx-auto flex flex-col gap-5">
+      <div className="w-full max-w-sm mx-auto">
+        <div className="card flex flex-col items-center gap-6 text-center p-6 sm:p-8">
 
-        {/* Top Back navigation */}
-        <button
-          type="button"
-          onClick={() => navigate(ROUTES.REVIEW)}
-          className="flex items-center gap-1.5 text-xs font-semibold text-gray-500 hover:text-salon-600 transition-colors self-start"
-        >
-          <ArrowLeft size={14} />
-          Change Rating
-        </button>
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-gold-400 to-amber-500 flex items-center justify-center shadow-lg shadow-amber-100 text-white animate-bounce-star">
+            <Sparkles size={32} />
+          </div>
 
-        <div className="card flex flex-col items-center gap-6 p-6 sm:p-8">
-
-          {/* Celebration Header */}
-          <div className="flex flex-col items-center gap-2 text-center">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-gold-400 to-amber-500 flex items-center justify-center shadow-lg shadow-amber-100 text-white animate-bounce-star">
-              <Sparkles size={32} />
-            </div>
-
+          <div className="flex flex-col gap-2">
             <h1 className="font-display text-2xl font-bold text-gray-800">
-              Thank You! We're Thrilled! 😊
+              Thank You! 😊
             </h1>
-
-            <p className="text-gray-500 text-xs sm:text-sm max-w-xs">
-              You gave us a <strong className="text-amber-600">{label} ({rating}★)</strong> review.
-              Share your experience on Google to help others find us!
+            <p className="text-gray-500 text-sm">
+              You rated us <strong className="text-amber-600">{label} ({rating || 5}★)</strong>.
+              Redirecting you to our Google Review page...
             </p>
           </div>
 
-          <div className="w-full border-t border-pink-50" />
+          <a
+            href={GOOGLE_REVIEW_URL}
+            className="btn-primary w-full flex items-center justify-center gap-2"
+          >
+            <ExternalLink size={18} />
+            <span>Open Google Review Now</span>
+          </a>
 
-          {/* Interactive Google Review Composer */}
-          <PositiveReviewComposer />
-
-          {/* Brand footer */}
-          <p className="text-xs text-gray-300 text-center">
-            {SALON_NAME} · We appreciate your honest review ✨
+          <p className="text-xs text-gray-400">
+            {SALON_NAME} ✨
           </p>
 
         </div>

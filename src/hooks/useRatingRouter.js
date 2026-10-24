@@ -1,31 +1,28 @@
 import { useNavigate } from 'react-router-dom';
 import { useReview } from '../context/ReviewContext';
-import { POSITIVE_THRESHOLD, ROUTES } from '../utils/constants';
+import { POSITIVE_THRESHOLD, ROUTES, GOOGLE_REVIEW_URL } from '../utils/constants';
 
 /**
  * useRatingRouter
  *
- * Encapsulates the core business rule:
- *   rating < POSITIVE_THRESHOLD  → navigate to /feedback (capture complaint)
- *   rating >= POSITIVE_THRESHOLD → navigate to /redirect (send to Google)
- *
- * Returns:
- *   handleRatingSelect(starValue: number) — call this when user taps a star
+ * Direct Review Routing Rule:
+ * - 1 or 2 stars (< 3): Lands directly on her app (private internal feedback form).
+ *   Never goes to Google, protecting the salon's public rating.
+ * - 3, 4, or 5 stars (>= 3): Redirects DIRECTLY to the salon's Google Maps review page!
  */
 export function useRatingRouter() {
   const navigate = useNavigate();
   const { setRating } = useReview();
 
   function handleRatingSelect(starValue) {
-    // Persist rating in context so downstream pages can read it
     setRating(starValue);
 
     if (starValue < POSITIVE_THRESHOLD) {
-      // Negative / neutral experience → internal feedback form
+      // 1 or 2 Stars -> Private feedback on her app
       navigate(ROUTES.FEEDBACK, { state: { rating: starValue } });
     } else {
-      // Positive experience → Google Maps review page
-      navigate(ROUTES.REDIRECT, { state: { rating: starValue } });
+      // 3, 4, or 5 Stars -> DIRECTLY redirect to Google Reviews!
+      window.location.href = GOOGLE_REVIEW_URL;
     }
   }
 
