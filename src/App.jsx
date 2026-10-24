@@ -5,6 +5,7 @@ import FeedbackPage   from './pages/FeedbackPage';
 import RedirectPage   from './pages/RedirectPage';
 import ThankYouPage   from './pages/ThankYouPage';
 import QRPage         from './pages/QRPage';
+import AdminPage      from './pages/AdminPage';
 import { ROUTES }     from './utils/constants';
 
 /**
@@ -38,6 +39,7 @@ export default function App() {
 
           {/* Confirmation Screen */}
           <Route path={ROUTES.THANKYOU}  element={<ThankYouPage />} />
+          <Route path="/admin"            element={<AdminPage />} />
 
           {/* Fallback */}
           <Route path="*"                element={<Navigate to="/" replace />} />

@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { Scissors } from 'lucide-react';
 import StarRating from '../components/StarRating';
 import { useRatingRouter } from '../hooks/useRatingRouter';
 import { SALON_NAME, SALON_TAGLINE, ROUTES } from '../utils/constants';
@@ -8,7 +7,7 @@ import { SALON_NAME, SALON_TAGLINE, ROUTES } from '../utils/constants';
  * LandingPage
  *
  * The direct Review screen that customers see when opening the link.
- * Shows the salon brand and 5-star rating interface.
+ * Displays the official salon logo and 5-star rating interface.
  * - Below 3 stars (< 3): Lands on internal private feedback form
  * - 3 stars or above (>= 3): Redirects directly to Google Reviews
  */
@@ -21,14 +20,12 @@ export default function LandingPage() {
 
         {/* ── Header / Brand ─────────────────────────────────────── */}
         <header className="flex flex-col items-center gap-4">
-          {/* Logo circle */}
-          <div
-            className="w-20 h-20 rounded-full bg-gradient-to-br from-salon-500 to-salon-700
-                       flex items-center justify-center shadow-xl shadow-salon-200"
-            aria-label={`${SALON_NAME} logo`}
-          >
-            <Scissors size={36} className="text-white" />
-          </div>
+          {/* Official Logo */}
+          <img
+            src="/logo.png"
+            alt={SALON_NAME}
+            className="w-24 h-24 rounded-full object-cover shadow-xl shadow-pink-100 border-2 border-white ring-2 ring-pink-100 bg-black"
+          />
 
           <div className="text-center">
             <h1 className="font-display text-3xl font-bold text-gray-800 leading-tight">

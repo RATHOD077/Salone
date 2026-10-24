@@ -7,7 +7,7 @@ import { useReview } from '../context/ReviewContext';
  * ThankYou
  *
  * Screen shown after a customer submits private feedback.
- * Clicking "Back to Home" resets review state and navigates to the home barcode page.
+ * Clicking "Back to Review" resets review state and navigates to the review page.
  */
 export default function ThankYou() {
   const navigate = useNavigate();
@@ -51,7 +51,7 @@ export default function ThankYou() {
           className="btn-primary w-full flex items-center justify-center gap-2"
         >
           <Home size={18} />
-          <span>Back to Home</span>
+          <span>Back to Review</span>
         </button>
       </div>
     </div>

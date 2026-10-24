@@ -41,16 +41,30 @@ export default function FeedbackForm() {
 
     setSubmitting(true);
 
-    // Save review on website
-    logReview({
+    const privateFeedback = {
       rating: rating || 1,
       type: 'negative_feedback',
       name: feedback.name.trim() || 'Anonymous',
       phone: feedback.phone.trim() || '',
       comment: feedback.message.trim(),
-    });
+    };
 
-    console.info('[FeedbackForm] Saved privately on site:', { rating, ...feedback });
+    try {
+      const response = await fetch('/api/feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(privateFeedback),
+      });
+      const body = await response.json();
+      if (!response.ok) throw new Error(body.error || 'Unable to send feedback.');
+      logReview(privateFeedback);
+    } catch (error) {
+      console.error('[FeedbackForm] Could not store private feedback:', error);
+      setErrors({ submit: 'We could not send your feedback. Please try again.' });
+      setSubmitting(false);
+      return;
+    }
+
     await new Promise((r) => setTimeout(r, 600));
 
     setSubmitting(false);
@@ -165,6 +179,7 @@ export default function FeedbackForm() {
           </>
         )}
       </button>
+      {errors.submit && <p className="text-center text-sm text-red-500">{errors.submit}</p>}
     </form>
   );
 }

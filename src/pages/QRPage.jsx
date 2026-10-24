@@ -1,13 +1,13 @@
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { QRCodeSVG } from 'qrcode.react';
-import { Download, Check, Scissors, Smartphone, Star, ArrowLeft } from 'lucide-react';
+import { Download, Check, Smartphone, Star, ArrowLeft } from 'lucide-react';
 import { APP_URL, SALON_NAME, SALON_TAGLINE, ROUTES } from '../utils/constants';
 
 /**
  * QRPage (/qr)
  *
- * Displays the Salon QR code standee.
+ * Displays the Salon QR code standee with official logo.
  * The primary button writes only "Review us" and leads directly to the review screen.
  */
 export default function QRPage() {
@@ -71,10 +71,11 @@ export default function QRPage() {
 
         {/* ── Header ─────────────────────────────────────────────── */}
         <header className="flex flex-col items-center gap-3 text-center">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-salon-500 to-salon-700
-                          flex items-center justify-center shadow-xl shadow-salon-200">
-            <Scissors size={30} className="text-white" />
-          </div>
+          <img
+            src="/logo.png"
+            alt={SALON_NAME}
+            className="w-20 h-20 rounded-full object-cover shadow-xl shadow-pink-100 border-2 border-white ring-2 ring-pink-100 bg-black"
+          />
           <div>
             <h1 className="font-display text-2xl font-bold text-gray-800">
               {SALON_NAME}
@@ -97,7 +98,7 @@ export default function QRPage() {
             </span>
           </div>
 
-          {/* Barcode / QR Code */}
+          {/* Barcode / QR Code with Centered Official Logo */}
           <div
             ref={qrRef}
             className="p-4 bg-white rounded-2xl border-2 border-pink-100
@@ -110,6 +111,12 @@ export default function QRPage() {
               includeMargin={false}
               fgColor="#111827"
               bgColor="#ffffff"
+              imageSettings={{
+                src: '/logo.png',
+                height: 46,
+                width: 46,
+                excavate: true,
+              }}
             />
           </div>
 
