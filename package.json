@@ -1,0 +1,12 @@
+{
+  "name": "salon-root",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "npm --prefix backend install",
+    "start": "node backend/server.js",
+    "backend:dev": "npm --prefix backend run dev",
+    "frontend:dev": "npm --prefix frontend run dev",
+    "frontend:build": "npm --prefix frontend run build"
+  }
+}
