@@ -1,54 +1,50 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ReviewProvider } from './context/ReviewContext';
-import ScannerPage    from './pages/ScannerPage';
+import QRPage         from './pages/QRPage';
 import LandingPage    from './pages/LandingPage';
 import FeedbackPage   from './pages/FeedbackPage';
 import RedirectPage   from './pages/RedirectPage';
 import ThankYouPage   from './pages/ThankYouPage';
-import QRPage         from './pages/QRPage';
+import ScannerPage    from './pages/ScannerPage';
 import { ROUTES }     from './utils/constants';
 
 /**
- * App
- *
- * Senior Developer Flow:
- * 1. App starts at `/` with the live Camera QR Scanner.
- * 2. When the salon QR code is scanned (or customer taps "Give Review Directly"),
- *    it advances seamlessly to `/review` (the Star Rating screen).
- * 3. If rating is < 3 stars:
- *    Routes to `/feedback` (private complaint form, saved internally on site, never sent to Google).
- * 4. If rating is >= 3 stars:
- *    Routes to `/redirect` (Google Review composer, saves review on site, auto-copies to clipboard,
- *    and opens Google Maps review page for instant 1-tap submission).
- * 5. `/qr` displays and exports the high-resolution Salon QR Standee for print.
+ * App Routing Architecture:
+ * 1. `/` (First Screen): Shows ONLY the Salon QR Code / Barcode Standee!
+ *    - Customers scan it with their phone camera to open `/review`.
+ *    - Has a prominent "Rate Directly on this Device" button.
+ * 2. `/review`: The Star Rating interface (1 to 5 stars).
+ * 3. `< 3 Stars`: Lands on `/feedback` (Internal private form).
+ * 4. `≥ 3 Stars`: Lands on `/redirect` (Auto-copies review and redirects to Google Maps).
+ * 5. `/scan`: Optional live camera scanner tool.
  */
 export default function App() {
   return (
     <BrowserRouter>
       <ReviewProvider>
         <Routes>
-          {/* Starting screen: Scanner */}
-          <Route path={ROUTES.START}     element={<ScannerPage />} />
-          <Route path="/scan"            element={<ScannerPage />} />
+          {/* Main Starting Screen: Barcode / QR Standee */}
+          <Route path="/"                element={<QRPage />} />
+          <Route path="/qr"              element={<QRPage />} />
 
-          {/* Customer Rating & Review */}
+          {/* Customer Rating & Review Page (QR scan destination) */}
           <Route path={ROUTES.REVIEW}    element={<LandingPage />} />
           <Route path="/rate"            element={<LandingPage />} />
 
           {/* < 3 Stars: Internal Private Feedback */}
           <Route path={ROUTES.FEEDBACK}  element={<FeedbackPage />} />
 
-          {/* >= 3 Stars: Positive Google Review Composer & Redirect */}
+          {/* >= 3 Stars: Positive Review Composer & Google Redirect */}
           <Route path={ROUTES.REDIRECT}  element={<RedirectPage />} />
 
           {/* Confirmation Screen */}
           <Route path={ROUTES.THANKYOU}  element={<ThankYouPage />} />
 
-          {/* Salon Counter QR Standee */}
-          <Route path={ROUTES.QR}        element={<QRPage />} />
+          {/* Camera Scanner Tool */}
+          <Route path="/scan"            element={<ScannerPage />} />
 
           {/* Fallback */}
-          <Route path="*" element={<Navigate to={ROUTES.START} replace />} />
+          <Route path="*"                element={<Navigate to="/" replace />} />
         </Routes>
       </ReviewProvider>
     </BrowserRouter>

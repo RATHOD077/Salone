@@ -27,13 +27,14 @@ export const REDIRECT_DELAY_MS = 3000;
 
 /** Route constants */
 export const ROUTES = {
-  START:    '/',          // Starting page shows the live Scanner
-  REVIEW:   '/review',    // Customer rating and review composition
+  START:    '/',          // Starting page shows the Salon QR / Barcode Standee
+  HOME:     '/',          // Alias
+  QR:       '/',          // Barcode page
+  REVIEW:   '/review',    // Customer rating and review composition (QR destination)
   FEEDBACK: '/feedback',  // Internal feedback form (< 3 stars)
   REDIRECT: '/redirect',  // Google Maps review composer (>= 3 stars)
   THANKYOU: '/thankyou',  // Thank you confirmation
-  QR:       '/qr',        // Printable Salon QR standee
-  SCAN:     '/',          // Alias for start
+  SCAN:     '/scan',      // Camera scanner tool
 };
 
 /** Rating label map */
