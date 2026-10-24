@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Scissors, Camera, QrCode } from 'lucide-react';
+import { Scissors } from 'lucide-react';
 import StarRating from '../components/StarRating';
 import { useRatingRouter } from '../hooks/useRatingRouter';
 import { SALON_NAME, SALON_TAGLINE, ROUTES } from '../utils/constants';
@@ -7,10 +7,10 @@ import { SALON_NAME, SALON_TAGLINE, ROUTES } from '../utils/constants';
 /**
  * LandingPage
  *
- * The QR code entry point. Renders the salon brand and the star rating UI.
- * After star selection, useRatingRouter handles navigation based on threshold:
- * - Below 3 stars (< 3): Lands on internal salon feedback app
- * - 3 stars or above (>= 3): Redirects to salon's Google Maps review page
+ * The direct Review screen that customers see when opening the link.
+ * Shows the salon brand and 5-star rating interface.
+ * - Below 3 stars (< 3): Lands on internal private feedback form
+ * - 3 stars or above (>= 3): Redirects directly to Google Reviews
  */
 export default function LandingPage() {
   const { handleRatingSelect } = useRatingRouter();
@@ -18,17 +18,6 @@ export default function LandingPage() {
   return (
     <div className="page-enter min-h-screen flex items-center justify-center px-4 py-8">
       <div className="w-full max-w-sm mx-auto flex flex-col gap-6">
-
-        {/* Barcode Standee Link */}
-        <div className="flex items-center justify-end w-full px-1">
-          <Link
-            to={ROUTES.START}
-            className="flex items-center gap-1.5 text-xs font-semibold text-gray-500 hover:text-salon-600 bg-white/80 backdrop-blur-sm px-3.5 py-1.5 rounded-full border border-pink-100 shadow-sm transition-all"
-          >
-            <QrCode size={14} className="text-salon-500" />
-            View Barcode Standee
-          </Link>
-        </div>
 
         {/* ── Header / Brand ─────────────────────────────────────── */}
         <header className="flex flex-col items-center gap-4">
@@ -77,8 +66,14 @@ export default function LandingPage() {
         </main>
 
         {/* ── Footer ─────────────────────────────────────────────── */}
-        <footer className="text-center text-xs text-gray-400">
-          Powered by {SALON_NAME} ✨
+        <footer className="flex flex-col items-center gap-2 text-center text-xs text-gray-400">
+          <p>Powered by {SALON_NAME} ✨</p>
+          <Link
+            to={ROUTES.QR}
+            className="text-[11px] text-gray-300 hover:text-salon-500 transition-colors"
+          >
+            Salon QR Standee
+          </Link>
         </footer>
 
       </div>

@@ -9,16 +9,15 @@ export const SALON_NAME = 'Hair Craft Family Salon';
 export const SALON_TAGLINE = 'Your Style, Our Craft';
 
 /**
- * App URL: Dynamically resolves to the current domain wherever hosted
- * (GitHub Pages, Vercel, Netlify, custom domain, or localhost)
+ * App URL: Dynamically resolves to current domain (https://salone-one.vercel.app)
  */
 export const APP_URL =
-  typeof window !== 'undefined' ? window.location.origin : 'http://localhost:5173';
+  typeof window !== 'undefined' ? window.location.origin : 'https://salone-one.vercel.app';
 
 /**
  * Star threshold:
  * - Below 3 stars (< 3): Internal private salon feedback
- * - 3 stars or above (>= 3): Redirects to Google Reviews
+ * - 3 stars or above (>= 3): Redirects directly to Google Reviews
  */
 export const POSITIVE_THRESHOLD = 3;
 
@@ -27,14 +26,12 @@ export const REDIRECT_DELAY_MS = 3000;
 
 /** Route constants */
 export const ROUTES = {
-  START:    '/',          // Starting page shows the Salon QR / Barcode Standee
-  HOME:     '/',          // Alias
-  QR:       '/',          // Barcode page
-  REVIEW:   '/review',    // Customer rating and review composition (QR destination)
+  HOME:     '/',          // Root URL directly goes to the Review page!
+  REVIEW:   '/',          // Direct Review entry point
+  QR:       '/qr',        // Salon counter QR standee
   FEEDBACK: '/feedback',  // Internal feedback form (< 3 stars)
-  REDIRECT: '/redirect',  // Google Maps review composer (>= 3 stars)
+  REDIRECT: '/redirect',  // Google Maps review redirect (>= 3 stars)
   THANKYOU: '/thankyou',  // Thank you confirmation
-  SCAN:     '/scan',      // Camera scanner tool
 };
 
 /** Rating label map */
