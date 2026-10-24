@@ -3,10 +3,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "npm --prefix backend install",
+    "build": "node scripts/build-frontend.js",
     "start": "node backend/server.js",
+    "backend:install": "npm --prefix backend install",
     "backend:dev": "npm --prefix backend run dev",
-    "frontend:dev": "npm --prefix frontend run dev",
-    "frontend:build": "npm --prefix frontend run build"
+    "frontend:dev": "npm --prefix frontend run dev"
   }
 }
