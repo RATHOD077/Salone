@@ -1,32 +1,19 @@
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, MessageCircleWarning } from 'lucide-react';
 import FeedbackForm from '../components/FeedbackForm';
-import { useReview } from '../context/ReviewContext';
 import { ROUTES, SALON_NAME } from '../utils/constants';
 
 /**
  * FeedbackPage
  *
  * Shown when the customer selects 1 or 2 stars.
- * Guards against direct URL access (no rating set → redirect home).
+ * Collects private complaint internally on the app.
  */
 export default function FeedbackPage() {
   const navigate = useNavigate();
-  const { rating } = useReview();
 
-  // ── Guard: must have arrived via star selection ─────────────────────────────
-  useEffect(() => {
-    if (rating === null) {
-      navigate(ROUTES.REVIEW, { replace: true });
-    }
-  }, [rating, navigate]);
-
-  if (rating === null) return null; // avoid flash while redirecting
-
-  // ── Render ──────────────────────────────────────────────────────────────────
   return (
-    <div className="page-enter min-h-screen flex items-center justify-center px-4 py-12">
+    <div className="page-enter min-h-screen flex items-center justify-center px-4 py-8">
       <div className="w-full max-w-sm mx-auto flex flex-col gap-6">
 
         {/* Back button */}

@@ -1,13 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 import { Heart, Home } from 'lucide-react';
-import { ROUTES, SALON_NAME } from '../utils/constants';
+import { SALON_NAME } from '../utils/constants';
 import { useReview } from '../context/ReviewContext';
 
 /**
  * ThankYou
  *
- * Final screen shown after a customer submits negative feedback.
- * Empathetic, warm messaging. Allows returning to home.
+ * Screen shown after a customer submits private feedback.
+ * Clicking "Back to Home" resets review state and navigates to the home barcode page.
  */
 export default function ThankYou() {
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ export default function ThankYou() {
 
   function handleReturnHome() {
     resetReview();
-    navigate(ROUTES.HOME);
+    navigate('/', { replace: true });
   }
 
   return (
@@ -34,10 +34,10 @@ export default function ThankYou() {
         <h2 className="font-display text-2xl font-bold text-gray-800">
           Thank You for Sharing
         </h2>
-        <p className="text-gray-500 text-base leading-relaxed max-w-xs mx-auto">
+        <p className="text-gray-500 text-sm leading-relaxed max-w-xs mx-auto">
           We're truly sorry your experience wasn't perfect.
-          Your feedback has been received and a team member
-          from <strong>{SALON_NAME}</strong> will reach out to make it right.
+          Your feedback has been received privately and our team
+          from <strong className="text-gray-700">{SALON_NAME}</strong> will take action to make it right.
         </p>
       </div>
 
@@ -48,10 +48,10 @@ export default function ThankYou() {
         <button
           type="button"
           onClick={handleReturnHome}
-          className="btn-secondary"
+          className="btn-primary w-full flex items-center justify-center gap-2"
         >
           <Home size={18} />
-          Back to Home
+          <span>Back to Home</span>
         </button>
       </div>
     </div>
